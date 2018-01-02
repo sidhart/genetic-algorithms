@@ -3,26 +3,24 @@
 Created on Fri Dec 29 16:18:12 2017
 
 @author: siddartha kandikonda
-genetic algorithm to maximise the sum of five numbers(solsize)
-numbers can range between 1 and solsize
+genetic algorithm to maximise the sum of five numbers
+numbers can range between 1 and 5 inclusive
 """
 
 import random
 
 # Builds one possible solution as array of random integers
-def buildChromosome(length):
+def buildChromosome(solsize):
     chromosome = []
-    for i in range(length):
-        chromosome.append(random.randint(1,solsize))
+    for i in range(solsize):
+        chromosome.append(random.randint(1,5))
     return chromosome
 
-# Evaluates the fitness of a solution
+# Evaluates the fitness(sum of numbers) of a solution
 def testFitness(solution):
-    total = 0
+    fitness = 0
     for i in solution:
-        total += i
-        # find ratio of current total to target
-    fitness = round((float(total)/float(target)),2)
+        fitness += i
     return fitness
 
 # Creates an initial population
@@ -86,28 +84,28 @@ def displayinfo(population):
     pop_fitness = []
     print('Population size: ' + str(len(population)))
     for chromosome in population:
-#        print('Chromosome #: '+str(ctr))
-#        for i in chromosome:
-#            print(i)
+#        print('Chromosome #: '+str(ctr))
+#        for i in chromosome:
+#            print(i)
         fitness = testFitness(chromosome)
         pop_fitness.append(fitness)
-#        print('Fitness: '+str(fitness))
+#        print('Fitness: '+str(fitness))
         #ctr += 1
     avg_fitness = round(float(sum(pop_fitness))/float(len(pop_fitness)),2)
     print('Average fitness: '+ str(avg_fitness))
 
 def getBest(population):
     for chromosome in population:
-        if (testFitness(chromosome) == maxFitness):
+        if (testFitness(chromosome) == target):
             return chromosome
         else:
             return None
 
 # Code for running the GA
-maxFitness = 1.0
 popsize = 150
 solsize = 5
-target = solsize ** 2
+max_num = 5
+target = (max_num*solsize)
 mutationRate = 0.01
 finished = False
 print('Generation: '+ str(1))
